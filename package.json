@@ -24,6 +24,9 @@
     "use-deep-compare": "^1.1.0",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "sass": "^1.54.9"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
