@@ -1,12 +1,33 @@
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react";
+import { useDeepCompareEffect } from "react-use";
+import useQuotes from "../../shared/swr/useQuotes";
 import QuoteList from './quote-list/QuoteList';
 
-const DUMMY_QUOTES = [
-  { id: 'q1', author: 'K', text: 'Learning React is fun!' },
-  { id: 'q2', author: 'KQ', text: 'Learning React is great!' },
-];
-
 const AllQuotes = () => {
-  return <QuoteList quotes={ DUMMY_QUOTES } />;
+
+  const { data, error, loading, updateData } = useQuotes();
+  const [currentName, setCurrentName] = useState({});
+  
+  const refreshHandler = () => {
+    updateData();
+  };
+
+  return (
+    <React.Fragment>
+      <div>
+        <button className="btn btn-primary mt-2" onClick={ refreshHandler }>Refresh</button>
+      </div>
+      {
+        loading ? (
+          <div>Loading...</div>
+        ) : (
+          <QuoteList quotes={ data } />
+        )
+      }
+    </React.Fragment>
+  
+  );
 };
 
 export default AllQuotes;

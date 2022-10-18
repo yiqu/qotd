@@ -3,15 +3,16 @@ import QuoteItem from './quote-item/QuoteItem';
 import classes from './QuoteList.module.scss';
 
 const QuoteList = (props) => {
+
   return (
     <Fragment>
       <ul className={ classes.list }>
         {props.quotes.map((quote) => (
           <QuoteItem
-            key={ quote.id }
-            id={ quote.id }
+            key={ quote.key }
+            id={ quote.key }
             author={ quote.author }
-            text={ quote.text }
+            text={ quote.quote }
           />
         ))}
       </ul>
