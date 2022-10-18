@@ -8,12 +8,11 @@ import { axiosFetcher } from "./fetcher";
 const BASE_URL = 'https://kq-1-1a499.firebaseio.com/quote-list.json';
 
 const useQuotes = () => {
-  let { data, error, isValidating, mutate } = useSWR(BASE_URL, axiosFetcher, {
+  const { data, error, isValidating, mutate } = useSWR(BASE_URL, axiosFetcher, {
     revalidateOnFocus: false
   });
-  const [currentData, setCurrentData] = useState([]);
 
-  //const [serverData, setServerData] = useState(null);
+  const [currentData, setCurrentData] = useState([]);
 
   useEffect(() => {
     console.log("new data detected");
@@ -22,12 +21,10 @@ const useQuotes = () => {
 
   const updateData = () => {
     mutate();
-    // axiosGet(BASE_URL).then(
-    //   (res) => {
-    //     setServerData(res.data)
-    //   }
-    // );
   };
+
+  const sortHandler = useCallback((sortDir) => {
+  }, []);
 
   const transformData = (fireData) => {
     let res = [];

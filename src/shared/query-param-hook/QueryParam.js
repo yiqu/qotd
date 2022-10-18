@@ -9,7 +9,20 @@ import {
 function useQuery() {
   const { search } = useLocation();
 
-  return React.useMemo(() => new URLSearchParams(search), [search]);
+  const searchParams = React.useMemo(() => new URLSearchParams(search), [search]);
+  const allParams = [];
+
+ for (const i of  searchParams.keys()) {
+  allParams.push({
+    key: i,
+    value: searchParams.get(i)
+  });
+ }
+
+  return {
+    urlSearchParams: searchParams,
+    allParams: allParams
+  };
 }
 
 export default useQuery;

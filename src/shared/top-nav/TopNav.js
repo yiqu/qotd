@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useReducer, useState, useContext, useMemo } from 'react';
 import classes from './TopNav.module.scss';
-import { NavLink } from 'react-router-dom';
-
+import { NavLink, Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const TopNav = () => {
+
+  const location = useLocation();
 
   const isLinkActive = (match, location) => {
     const supposedPath = match?.url;
@@ -14,18 +16,36 @@ const TopNav = () => {
     return false;
   };
 
+  const defaultQuotesTo = {
+    pathname: "/quotes"
+  };
+
+  const quotesTo = {
+    pathname: "/quotes",
+    search: location.search
+  };
+
+  const newQuoteTo = {
+    pathname: "/new",
+    search: location.search
+  };
+
   return (
     <header className={ classes.header }>
-      <div className={ classes.logo }>Great Quotes</div>
+      <div className={ classes.logo }>
+        <Link to={ defaultQuotesTo }>
+          Great Quotes
+        </Link>
+      </div>
       <nav className={ classes.nav }>
         <ul>
           <li>
-            <NavLink to='/quotes' activeClassName={ classes.active } isActive={ isLinkActive }>
+            <NavLink to={ quotesTo } activeClassName={ classes.active } isActive={ isLinkActive }>
               All Quotes
             </NavLink>
           </li>
           <li>
-            <NavLink to='/new' activeClassName={ classes.active } isActive={ isLinkActive }>
+            <NavLink to={ newQuoteTo } activeClassName={ classes.active } isActive={ isLinkActive }>
               Add a Quote
             </NavLink>
           </li>

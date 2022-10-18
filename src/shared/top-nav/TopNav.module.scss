@@ -11,6 +11,14 @@
 .logo {
   font-size: 2rem;
   color: white;
+
+  a {
+    color: #e6fcfc;
+  }
+  a:hover {
+    color: #e6fcfc;
+    text-decoration: none;
+  }
 }
 
 .nav ul {

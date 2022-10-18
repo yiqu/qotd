@@ -4,13 +4,14 @@ import classes from './NewQuote.module.scss';
 import { useFormik, useFormikContext, Formik } from 'formik';
 import { validationSchema } from './validation-schema';
 import QuoteForm from "./NewQuoteForm";
-import { useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import { axiosPost } from "../../shared/rest/axios-rest";
-
+import { useHistory, useLocation } from 'react-router-dom';
 
 export const NewQuote = () => {
   const history = useHistory();
+  const location = useLocation();
+
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +30,10 @@ export const NewQuote = () => {
       (res) => {
         if (res.status === 200) {
           setIsLoading(false);
-          history.push('/quotes');
+          history.push({
+            pathname: '/quotes',
+            search: location.search
+          });
         }
       }
     ).catch((err) => {
@@ -39,7 +43,10 @@ export const NewQuote = () => {
   };
 
   const onCancelQuote = () => {
-    history.push('/quotes');
+    history.push({
+      pathname: '/quotes',
+      search: location.search
+    });
   };
 
   return (
