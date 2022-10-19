@@ -8,3 +8,15 @@ export const axiosFetcher = async (url) => {
       if (error.response.status !== 409) throw error;
     });
 };
+
+export const appendKeyFireData = (fireData) => {
+  let res = [];
+  const keys = Object.keys(fireData ?? []);
+  keys.forEach((key) => {
+    res.push({
+      id: key,
+      ...fireData[key]
+    });
+  });
+  return res;
+};

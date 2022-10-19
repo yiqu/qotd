@@ -3,10 +3,15 @@ import React, { useEffect, useReducer, useState, useContext, useMemo } from 'rea
 import classes from './TopNav.module.scss';
 import { NavLink, Link } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router-dom';
+import useQuery from '../query-param-hook/QueryParam';
 
 const TopNav = () => {
 
   const location = useLocation();
+  const { allParams } = useQuery();
+  const sortParamData = allParams.find((param) => {
+    return param.key === 'sort';
+  });
 
   const isLinkActive = (match, location) => {
     const supposedPath = match?.url;
@@ -22,12 +27,12 @@ const TopNav = () => {
 
   const quotesTo = {
     pathname: "/quotes",
-    search: location.search
+    search: sortParamData ? `?${sortParamData.key}=${sortParamData.value}` : null
   };
 
   const newQuoteTo = {
     pathname: "/new",
-    search: location.search
+    search: sortParamData ? `?${sortParamData.key}=${sortParamData.value}` : null
   };
 
   return (

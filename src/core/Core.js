@@ -16,7 +16,7 @@ const Core = () => {
 
       <TopNav></TopNav>
 
-      <div className="container">
+      <div className="container mb-5">
         <Switch>
           <Route path='/' exact>
             <Redirect to='/quotes' />
