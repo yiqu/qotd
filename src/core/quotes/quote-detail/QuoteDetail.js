@@ -14,6 +14,7 @@ import useQuoteComments from '../../../shared/swr/useQuoteComment';
 import Comments from './comments/Comments';
 import ActionBar from '../../../shared/action-bar/ActionBar';
 import { axiosFetcher } from '../../../shared/swr/fetcher';
+import { getQuoteAndComments, getQuoteDetail } from '../../../shared/api/quote-detail';
 
 const initialValue = {
   comment: ''
@@ -31,7 +32,7 @@ const QuoteDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const quoteDetail = useLoaderData();
+  const {detail: quoteDetail, comments} = useLoaderData();
 
   const { urlSearchParams: queryParams, allParams } = useQuery();
   const [addCommentLoading, setAddCommentLoading] = useState(false);
@@ -39,8 +40,7 @@ const QuoteDetail = () => {
   const quoteId = params.quoteId;
 
   //const { quoteDetail, isLoading, update } = useQuoteDetail(quoteId);
-
-  const { comments, isLoading: isCommentsLoading, error, update: updateComments } = useQuoteComments(quoteId);
+  //const { comments, isLoading: isCommentsLoading, error, update: updateComments } = useQuoteComments(quoteId);
 
   const addCommentHandler = () => {
     navigate({
@@ -64,7 +64,6 @@ const QuoteDetail = () => {
     axiosPost(`quote-list/${quoteId}/comments`, data).then(
       (res) => {
         onCancelCommentHandler();
-        updateComments();
       }
     ).catch((err) => {
       console.log(err);
@@ -113,15 +112,13 @@ const QuoteDetail = () => {
             </div>
             <div className='mb-3 w-100 d-flex flex-row justify-content-center align-items-center'>
               <div className={ `${classes['comments-parent']}` }>
-                { isCommentsLoading ? (
-                  <div>Loading comments...</div>
+                { 
+                  comments.length > 0 ? (
+                    <Comments comments={ comments }></Comments>
                   ) : (
-                    comments.length > 0 ? (
-                      <Comments comments={ comments }></Comments>
-                    ) : (
-                      <div className='text-center font-italic'>Be the first to comment</div>
-                    )
-                  )}
+                    <div className='text-center font-italic'>Be the first to comment</div>
+                  )
+                }
               </div>
             </div>
             <div className='w-100 d-flex flex-row justify-content-center align-items-center'>
@@ -161,6 +158,8 @@ export default QuoteDetail;
 export const loader = ({request, params}) => {
   const quoteDetailId = params.quoteId;
   const userId = params.userId;
-
-  return axiosFetcher(`${QUOTE_LIST_BASE_URL}/${quoteDetailId}.json`);
+  if (params['*'] === '') {
+    return getQuoteAndComments(quoteDetailId);
+  }
+  return;
 };
