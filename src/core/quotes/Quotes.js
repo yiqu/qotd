@@ -5,7 +5,7 @@ import useQuotes from "../../shared/swr/useQuotes";
 import QuoteList from './quote-list/QuoteList';
 import SortActions from "./SortActions";
 import styles from './Quotes.module.scss';
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import useQuery from "../../shared/query-param-hook/QueryParam";
 
 
@@ -25,7 +25,7 @@ const AllQuotes = () => {
   const { data, error, loading, updateData, sortFn } = useQuotes();
   const [ sortDirection, setSortDirection ] = useState(SortButtons[0]);
   const [ quoteDisplay, setQuoteDisplay ] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { urlSearchParams: queryParams, allParams } = useQuery();
 
@@ -50,7 +50,7 @@ const AllQuotes = () => {
   };
 
   const updateUrlQParams = (sortDir) => {
-    history.push({
+    navigate({
       pathname: "/quotes",
       search: `?sort=${sortDir.value}`
     });

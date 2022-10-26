@@ -6,10 +6,10 @@ import { validationSchema } from './validation-schema';
 import QuoteForm from "./NewQuoteForm";
 import useSWR from 'swr';
 import { axiosPost } from "../../shared/rest/axios-rest";
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const NewQuote = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
 
@@ -30,7 +30,7 @@ export const NewQuote = () => {
       (res) => {
         if (res.status === 200) {
           setIsLoading(false);
-          history.push({
+          navigate({
             pathname: '/quotes',
             search: location.search
           });
@@ -43,7 +43,7 @@ export const NewQuote = () => {
   };
 
   const onCancelQuote = () => {
-    history.push({
+    navigate({
       pathname: '/quotes',
       search: location.search
     });

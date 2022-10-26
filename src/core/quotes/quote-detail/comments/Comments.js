@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useReducer, useState, useContext, useMemo } from 'react';
 import {
-  useParams, useHistory, useLocation, Route
+  useParams, useLocation, Route
 } from "react-router-dom";
 
 const Comments = (props) => {

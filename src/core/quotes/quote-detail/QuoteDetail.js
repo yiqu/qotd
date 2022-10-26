@@ -2,7 +2,7 @@
 import React, { useEffect, useReducer, useState, useContext, useMemo } from 'react';
 import classes from './QuoteDetail.module.scss';
 import {
-  useParams, useHistory, useLocation, Route, useRouteMatch
+  useParams, useNavigate, useLocation, Route, Routes
 } from "react-router-dom";
 import useQuery from "../../../shared/query-param-hook/QueryParam";
 import useQuoteDetail from '../../../shared/swr/useQuote';
@@ -19,9 +19,8 @@ const initialValue = {
 
 const QuoteDetail = () => {
   const params = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const match = useRouteMatch();
 
   const { urlSearchParams: queryParams, allParams } = useQuery();
   const [addCommentLoading, setAddCommentLoading] = useState(false);
@@ -33,20 +32,20 @@ const QuoteDetail = () => {
   const { comments, isLoading: isCommentsLoading, error, update: updateComments } = useQuoteComments(quoteId);
 
   const addCommentHandler = () => {
-    history.replace({
-      pathname: `${location.pathname}/add-comment`,
+    navigate({
+      pathname: `add-comment`,
       search: location.search,
-    });
+    }, { replace: true });
   };
 
   useEffect(() => {
   }, [queryParams]);
 
   const onCancelCommentHandler = () => {
-    history.replace({
-      pathname: `${match.url}`,
+    navigate({
+      pathname: '',
       search: location.search
-    });
+    }, { replace: true });
   };
 
   const onSubmitHandler = (data) => {
@@ -97,27 +96,28 @@ const QuoteDetail = () => {
                 </div>
               </div>
               <div className='w-100 d-flex flex-row justify-content-center align-items-center'>
-                <Route path={ `${match?.path}/add-comment` }>
-                  <div className={ `${classes['form-parent']}` }>
-                    <Formik
+                <Routes>
+                  <Route path="add-comment"  element={
+                    <div className={ `${classes['form-parent']}` }>
+                      <Formik
                       initialValues={ initialValue }
                       validationSchema= { validationSchema }
                       onSubmit= { onSubmitHandler }>
-                      {
+                        {
                         (formik) => {
                           return <CommentForm formik={ formik } apiLoading={ addCommentLoading } cancel={ onCancelCommentHandler }></CommentForm>;
                         }
                       }
-                    </Formik>
-                  </div>
-                </Route>
+                      </Formik>
+                    </div>
+                  } />
+                </Routes>
+                
               </div>
-              
-              {
-                match?.isExact ? (
-                  <button className='btn btn-primary' onClick={ addCommentHandler }>Comment</button>
-                ) : (<> </>)
-              }
+
+              <Routes>
+                <Route path="" element={ <button className='btn btn-primary' onClick={ addCommentHandler }>Comment</button> } />
+              </Routes>
               
             </div>
           </React.Fragment>

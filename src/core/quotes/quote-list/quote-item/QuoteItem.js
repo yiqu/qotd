@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Link } from 'react-router-dom';
 import {
-  useParams, useHistory, useLocation
+  useParams, useLocation
 } from "react-router-dom";
 import classes from './QuoteItem.module.scss';
 
@@ -10,7 +10,7 @@ const QuoteItem = (props) => {
   const userId = 'yqu';
 
   const quoteDetailLink = {
-    pathname: `/quotes/${props.id}/${userId}`,
+    pathname: `${props.id}/${userId}`,
     search: location.search
   };
 

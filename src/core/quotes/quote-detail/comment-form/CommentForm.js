@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useReducer, useState, useContext, useMemo } from 'react';
 import {
-  useParams, useHistory, useLocation, Route
+  useParams, useLocation, Route
 } from "react-router-dom";
 import FormikTextInput from '../../../../shared/form/input/SimpleInput';
 import FormikTextArea from '../../../../shared/form/text-box/Textarea';
