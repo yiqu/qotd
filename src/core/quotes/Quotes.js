@@ -58,6 +58,7 @@ const AllQuotes = () => {
 
   return (
     <React.Fragment>
+      
       <div className="d-flex justify-content-start mt-3">
         <div className="mr-5">
           <button className="btn btn-primary" onClick={ refreshHandler }>Refresh</button>
@@ -74,6 +75,7 @@ const AllQuotes = () => {
           <QuoteList quotes={ quoteDisplay } sortDir={ sortDirection } />
         )
       }
+      
     </React.Fragment>
   
   );

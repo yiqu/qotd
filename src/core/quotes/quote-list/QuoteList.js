@@ -3,7 +3,6 @@ import { Fragment, useEffect } from 'react';
 import useMemoCompare from '../../../shared/hooks/useMemoCompare';
 import QuoteItem from './quote-item/QuoteItem';
 import classes from './QuoteList.module.scss';
-import { useDeepCompareMemo } from "use-deep-compare";
 
 
 const QuoteList = (props) => {
@@ -12,6 +11,7 @@ const QuoteList = (props) => {
 
   return (
     <Fragment>
+
       <ul className={ classes.list }>
         {display.map((quote) => (
           <QuoteItem
@@ -23,6 +23,7 @@ const QuoteList = (props) => {
           />
         ))}
       </ul>
+
     </Fragment>
   );
 };
