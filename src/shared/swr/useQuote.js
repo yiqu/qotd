@@ -13,11 +13,15 @@ const useQuoteDetail = (id) => {
     revalidateOnFocus: false
   });
 
+  const updateData = () => {
+    mutate();
+  };
+
   return {
     quoteDetail: data,
     isLoading: (data === undefined) && isValidating,
     isError: error,
-    update: mutate
+    update: updateData
   };
 };
 

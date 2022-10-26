@@ -12,10 +12,18 @@ import { validationSchema } from './validation-schema';
 import { axiosPost } from '../../../shared/rest/axios-rest';
 import useQuoteComments from '../../../shared/swr/useQuoteComment';
 import Comments from './comments/Comments';
+import ActionBar from '../../../shared/action-bar/ActionBar';
 
 const initialValue = {
   comment: ''
 };
+
+const actions = [
+  {
+    id: 'refresh',
+    display: 'Refresh'
+  }
+];
 
 const QuoteDetail = () => {
   const params = useParams();
@@ -62,11 +70,30 @@ const QuoteDetail = () => {
     });
   };
 
+  const actionClickHandler = (action) => (e) => {
+    
+    switch (action.id) {
+      case actions[0].id: {
+        update();
+        break;
+      }
+      default: {
+
+      }
+    }
+  };
+
+
   return (
     <React.Fragment>
+      
+      <div className='d-flex justify-content-start mt-3'>
+        <ActionBar actions={ actions } actionClick={ actionClickHandler }></ActionBar>
+      </div>
+
       { isLoading ? (<div>Loading...</div>) : (
         <div className="d-flex justify-content-center align-items-center flex-column">
-
+          
           <div className='w-100'>
             <figure className={ classes.quote }>
               <blockquote>
