@@ -5,11 +5,11 @@ import useSWR from 'swr';
 import { axiosGet } from "../rest/axios-rest";
 import { axiosFetcher } from "./fetcher";
 
-const BASE_URL = 'https://kq-1-1a499.firebaseio.com/quote-list';
+export const QUOTE_LIST_BASE_URL = 'https://kq-1-1a499.firebaseio.com/quote-list';
 
 const useQuoteDetail = (id) => {
 
-  const { data, error, isValidating, mutate } = useSWR(`${BASE_URL}/${id}.json`, axiosFetcher, {
+  const { data, error, isValidating, mutate } = useSWR(`${QUOTE_LIST_BASE_URL}/${id}.json`, axiosFetcher, {
     revalidateOnFocus: false
   });
 

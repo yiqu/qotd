@@ -5,7 +5,7 @@ import useQuotes from "../../shared/swr/useQuotes";
 import QuoteList from './quote-list/QuoteList';
 import SortActions from "./SortActions";
 import styles from './Quotes.module.scss';
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate, Outlet } from "react-router-dom";
 import useQuery from "../../shared/query-param-hook/QueryParam";
 
 
