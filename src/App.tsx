@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import './App.css';
 import React, { useEffect, useReducer, useState, useContext, useMemo } from 'react';
@@ -8,9 +9,10 @@ import AllQuotes from "./core/quotes/Quotes";
 import QuoteDetail, { loader as QuoteDetailLoader } from './core/quotes/quote-detail/QuoteDetail';
 import NewQuote from "./core/new/NewQuote";
 import QuotesLayout from './core/quotes/QuotesLayout';
+import { Router } from '@remix-run/router';
 
 
-const oldRouter = createBrowserRouter(createRoutesFromElements(
+const oldRouter: Router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={ <Core /> }>
 
     <Route index element={ <Navigate replace to="quotes" /> } />
@@ -57,11 +59,12 @@ const routeList = createBrowserRouter([
 ]);
 
 function App() {
+  
+
   return (
     <React.Fragment>
 
-      <RouterProvider router={ routeList }>
-      </RouterProvider>
+      <RouterProvider router={ routeList } />
 
     </React.Fragment>
   );
