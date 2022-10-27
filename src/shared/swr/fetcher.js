@@ -1,7 +1,11 @@
 import axios from 'axios';
+import { sleep } from "../utils/sleep";
 
 
-export const axiosFetcher = async (url) => {
+export const axiosFetcher = async (url, slow = 0) => {
+  if (slow) {
+    await sleep(slow);
+  }
   return await axios.get(url)
     .then((res) => res.data)
     .catch((error) => {
