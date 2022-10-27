@@ -15,6 +15,8 @@ import Comments from './comments/Comments';
 import ActionBar from '../../../shared/action-bar/ActionBar';
 import { axiosFetcher } from '../../../shared/swr/fetcher';
 import { getQuoteAndComments, getQuoteComments, getQuoteDetail } from '../../../shared/api/quote-detail';
+import useShowComments from '../../../shared/hooks/useShowComments';
+import LoadingLogo from '../../../shared/loading/full-logo/LoadingLogo';
 
 const initialValue = {
   comment: ''
@@ -32,39 +34,34 @@ const actions = [
 ];
 
 const QuoteDetail = () => {
-  const params = useParams();
+  const { quoteId } = useParams();
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const {quoteDetail, comments} = useLoaderData();
-  const fetcher = useFetcher();
-  const matches = useMatches();
+
+  const [showCommentForm, setShowCommentForm] = useState(false);
 
   const { urlSearchParams: queryParams, allParams } = useQuery();
+
   const [addCommentLoading, setAddCommentLoading] = useState(false);
+
+  // set current path name on start
   const [basePathname, setBasePathname] = useState(location.pathname);
 
-
-  const quoteId = params.quoteId;
 
   //const { quoteDetail, isLoading, update } = useQuoteDetail(quoteId);
   //const { comments, isLoading: isCommentsLoading, error, update: updateComments } = useQuoteComments(quoteId);
 
   const addCommentHandler = () => {
-    navigate({
-      pathname: `add-comment`,
-      search: location.search,
-    }, { replace: true });
+    setShowCommentForm(true);
   };
 
-  useEffect(() => {
-  }, [matches]);
 
   const onCancelCommentHandler = () => {
-    navigate({
-      pathname: '',
-      search: location.search
-    }, { replace: true });
+    setShowCommentForm(false);
+    navigateInPlace();
   };
 
   const onSubmitHandler = (data) => {
@@ -80,11 +77,18 @@ const QuoteDetail = () => {
     });
   };
 
+  const navigateInPlace = () => {
+    navigate({
+      pathname: '',
+      search: location.search
+    }, { replace: true });
+  };
+
   const actionClickHandler = (action) => (e) => {
     
     switch (action.id) {
       case actions[1].id: {
-        fetcher.load(basePathname);
+        navigateInPlace();
         break;
       }
       case actions[0].id: {
@@ -122,28 +126,30 @@ const QuoteDetail = () => {
 
         <React.Fragment>
           <div className='w-100 d-flex justify-content-center align-items-center flex-column'>
-            <div className='lato fs-18 mb-3'>
-              Thoughts on this quote:
-            </div>
 
-            <Suspense fallback={ <p>Loading comments...</p> }>
+            <Suspense fallback={ <LoadingLogo message={ 'comments' }></LoadingLogo> }>
               <Await 
                 resolve={ comments }
                 errorElement={ <p>Error loading quote comments.</p> }>
                 {
                     (comments) => {
                       return (
-                        <div className='mb-3 w-100 d-flex flex-row justify-content-center align-items-center'>
-                          <div className={ `${classes['comments-parent']}` }>
-                            { 
+                        <>
+                          <div className='lato fs-18 mb-3'>
+                            Thoughts on this quote:
+                          </div>
+                          <div className='w-100 d-flex flex-row justify-content-center align-items-center'>
+                            <div className={ `${classes['comments-parent']}` }>
+                              { 
                               comments.length > 0 ? (
                                 <Comments comments={ comments }></Comments>
                               ) : (
                                 <div className='text-center font-italic'>Be the first to comment</div>
                               )
                             }
+                            </div>
                           </div>
-                        </div>
+                        </>
                       );
                     }
                 }
@@ -151,30 +157,28 @@ const QuoteDetail = () => {
             </Suspense>
             
             <div className='w-100 d-flex flex-row justify-content-center align-items-center'>
-              <Routes>
-                <Route path="add-comment"  element={
-                  <div className={ `${classes['form-parent']}` }>
-                    <Formik
-                      initialValues={ initialValue }
-                      validationSchema= { validationSchema }
-                      onSubmit= { onSubmitHandler }>
-                      {
-                        (formik) => {
-                          return <CommentForm formik={ formik } apiLoading={ addCommentLoading } cancel={ onCancelCommentHandler }></CommentForm>;
-                        }
-                      }
-                    </Formik>
+
+              { showCommentForm ? (
+                <div className={ `${classes['form-parent']}` }>
+                  <Formik
+                  initialValues={ initialValue }
+                  validationSchema= { validationSchema }
+                  onSubmit= { onSubmitHandler }>
+                    {
+                    (formik) => {
+                      return <CommentForm formik={ formik } apiLoading={ addCommentLoading } cancel={ onCancelCommentHandler }></CommentForm>;
+                    }
+                  }
+                  </Formik>
+                </div>) : (
+                  <div>
+                    <button className='btn btn-primary mt-3' onClick={ addCommentHandler }>Comment</button>
                   </div>
-                  } />
-              </Routes>
-                
+                )
+              }
+
             </div>
 
-            <Routes>
-              <Route path="" element={ <button className='btn btn-primary' onClick={ addCommentHandler } 
-                >Comment</button> } />
-            </Routes>
-              
           </div>
         </React.Fragment>
       </div>

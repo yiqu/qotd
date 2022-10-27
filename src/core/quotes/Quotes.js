@@ -7,6 +7,7 @@ import SortActions from "./SortActions";
 import styles from './Quotes.module.scss';
 import { useParams, useLocation, useNavigate, Outlet } from "react-router-dom";
 import useQuery from "../../shared/query-param-hook/QueryParam";
+import LoadingLogo from "../../shared/loading/full-logo/LoadingLogo";
 
 
 const SortButtons = [
@@ -70,7 +71,7 @@ const AllQuotes = () => {
       </div>
       {
         loading ? (
-          <div>Loading...</div>
+          <LoadingLogo message={ 'all quotes' }></LoadingLogo>
         ) : (
           <QuoteList quotes={ quoteDisplay } sortDir={ sortDirection } />
         )
