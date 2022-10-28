@@ -58,7 +58,7 @@ const routeList = createBrowserRouter([
   }
 ]);
 
-function App() {
+function App(): JSX.Element {
   
 
   return (
