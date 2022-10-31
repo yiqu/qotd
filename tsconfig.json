@@ -24,7 +24,8 @@
     "paths": {
       "@shared/*": ["src/shared/*"],
       "@qotd-hooks/*": ["src/shared/swr/*"]
-    }
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": [
     "src"

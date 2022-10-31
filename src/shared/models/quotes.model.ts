@@ -11,3 +11,15 @@ export interface Comment {
   id: string;
   date?: number;
 }
+
+export interface SortActionButton {
+  display: 'descending' | 'ascending';
+  value: string;
+}
+
+export interface Quote {
+  key?: string;
+  author: string;
+  quote: string;
+  date: number;
+}

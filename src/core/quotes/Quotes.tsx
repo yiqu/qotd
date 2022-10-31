@@ -1,16 +1,18 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useDeepCompareEffect } from "react-use";
 import useQuotes from "../../shared/swr/useQuotes";
 import QuoteList from './quote-list/QuoteList';
 import SortActions from "./SortActions";
 import styles from './Quotes.module.scss';
-import { useParams, useLocation, useNavigate, Outlet } from "react-router-dom";
+import { useParams, useLocation, useNavigate, Outlet, NavigateFunction } from "react-router-dom";
 import useQuery from "../../shared/query-param-hook/QueryParam";
 import LoadingLogo from "../../shared/loading/full-logo/LoadingLogo";
+import { SortActionButton, Quote } from "@shared/models/quotes.model";
+import { UrlQuery } from "@shared/models/url";
 
 
-const SortButtons = [
+const SortButtons: SortActionButton[] = [
   {
     display: 'ascending',
     value: 'asc'
@@ -24,9 +26,10 @@ const SortButtons = [
 const AllQuotes = () => {
 
   const { data, error, loading, updateData, sortFn } = useQuotes();
-  const [ sortDirection, setSortDirection ] = useState(SortButtons[0]);
-  const [ quoteDisplay, setQuoteDisplay ] = useState([]);
-  const navigate = useNavigate();
+  const [ sortDirection, setSortDirection ] = useState<SortActionButton>(SortButtons[0]);
+  const [ quoteDisplay, setQuoteDisplay ] = useState<Quote[]>([]);
+
+  const navigate: NavigateFunction = useNavigate();
 
   const { urlSearchParams: queryParams, allParams } = useQuery();
 
@@ -46,11 +49,11 @@ const AllQuotes = () => {
     updateData();
   };
 
-  const onSortChangeHandler = (sortDir) => {
+  const onSortChangeHandler = (sortDir: SortActionButton) => {
     updateUrlQParams(sortDir);
   };
 
-  const updateUrlQParams = (sortDir) => {
+  const updateUrlQParams = (sortDir: SortActionButton) => {
     navigate({
       pathname: "/quotes",
       search: `?sort=${sortDir.value}`
