@@ -10,7 +10,8 @@ import useQuery from "../../shared/query-param-hook/QueryParam";
 import LoadingLogo from "../../shared/loading/full-logo/LoadingLogo";
 import { SortActionButton, Quote } from "@shared/models/quotes.model";
 import { UrlQuery } from "@shared/models/url";
-
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 const SortButtons: SortActionButton[] = [
   {
@@ -64,13 +65,15 @@ const AllQuotes = () => {
     <React.Fragment>
       
       <div className="d-flex justify-content-start mt-3">
-        <div className="mr-5">
-          <button className="btn btn-primary" onClick={ refreshHandler }>Refresh</button>
-        </div>
 
-        <div className={ `${styles['action-parent']}` }>
-          <SortActions actions={ SortButtons } sortDir={ sortDirection } onSortChange={ onSortChangeHandler }></SortActions>
-        </div>
+        <Stack spacing={ 2 } direction="row" justifyContent="flex-start" className="w-100">
+          <Button variant="outlined" onClick={ refreshHandler } size="medium">Refresh</Button>
+
+          <div className={ `${styles['action-parent']}` }>
+            <SortActions actions={ SortButtons } sortDir={ sortDirection } onSortChange={ onSortChangeHandler }></SortActions>
+          </div>
+        </Stack>
+
       </div>
       {
         loading ? (

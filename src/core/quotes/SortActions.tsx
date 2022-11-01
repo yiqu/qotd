@@ -2,6 +2,9 @@
 import { FCC } from "@shared/models/fc-children.model";
 import { SortActionProp } from "@shared/models/sort-actions.model";
 import React, { useEffect, useState } from "react";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
 
 const SortActions: FCC<SortActionProp> = (props) => {
 
