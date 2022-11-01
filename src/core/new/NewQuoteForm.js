@@ -40,7 +40,7 @@ const QuoteForm = ({formik, apiLoading, cancel}) => {
       <form onSubmit={ formik.onSubmit }>
         <fieldset disabled={ apiLoading }>
           
-          <div className="row">
+          <div className="">
             <div className="form-group col-3">
               <FormikTextInput label="Author"
                 name="author"
@@ -50,7 +50,7 @@ const QuoteForm = ({formik, apiLoading, cancel}) => {
             </div>
           </div>
             
-          <div className="row">
+          <div className="">
             <div className="form-group col-6">
               <FormikTextArea label="Quote"
                 name="quote"
@@ -61,7 +61,7 @@ const QuoteForm = ({formik, apiLoading, cancel}) => {
             </div>
           </div>
             
-          <div className='row justify-content-between'>
+          <div className='justify-content-between'>
             <div className="col-4">
               <button className="btn btn-success btn-sm mr-2" onClick={ submitHandler } type="button"
                 disabled={ apiLoading }>{ apiLoading ? 'Working...' : 'Submit' }</button>

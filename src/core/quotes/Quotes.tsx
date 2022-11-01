@@ -12,6 +12,8 @@ import { SortActionButton, Quote } from "@shared/models/quotes.model";
 import { UrlQuery } from "@shared/models/url";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+
 
 const SortButtons: SortActionButton[] = [
   {
@@ -64,24 +66,26 @@ const AllQuotes = () => {
   return (
     <React.Fragment>
       
-      <div className="d-flex justify-content-start mt-3">
+      <Grid container spacing={ 0 } direction={ "column" } lg={ 12 } xs={ 12 } sx={ {my: 3} } justifyContent="center" alignItems="center">
 
-        <Stack spacing={ 2 } direction="row" justifyContent="flex-start" className="w-100">
+        <Stack direction="row" spacing={ 2 } justifyContent="center" alignItems={ "center" } sx={ {mb:3} }>
           <Button variant="outlined" onClick={ refreshHandler } size="medium">Refresh</Button>
 
-          <div className={ `${styles['action-parent']}` }>
+          <div>
             <SortActions actions={ SortButtons } sortDir={ sortDirection } onSortChange={ onSortChangeHandler }></SortActions>
           </div>
         </Stack>
 
-      </div>
-      {
-        loading ? (
-          <LoadingLogo message={ 'all quotes' }></LoadingLogo>
-        ) : (
-          <QuoteList quotes={ quoteDisplay } sortDir={ sortDirection } />
-        )
-      }
+        {
+          loading ? (
+            <LoadingLogo message={ 'all quotes' }></LoadingLogo>
+          ) : (
+            <QuoteList quotes={ quoteDisplay } sortDir={ sortDirection } />
+          )
+        }
+      </Grid>
+
+      
       
     </React.Fragment>
   

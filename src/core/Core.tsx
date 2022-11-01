@@ -12,12 +12,8 @@ const Core: React.FC = () => {
 
       <TopNav></TopNav>
 
-      <div className="container mb-5">
-
-        <Outlet></Outlet>
+      <Outlet></Outlet>
         
-      </div>
-
     </React.Fragment>
   );
 };

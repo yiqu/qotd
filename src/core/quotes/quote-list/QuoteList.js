@@ -3,7 +3,9 @@ import { Fragment, useEffect } from 'react';
 import useMemoCompare from '../../../shared/hooks/useMemoCompare';
 import QuoteItem from './quote-item/QuoteItem';
 import classes from './QuoteList.module.scss';
-
+import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import List from '@mui/material/List';
 
 const QuoteList = (props) => {
 
@@ -11,19 +13,22 @@ const QuoteList = (props) => {
 
   return (
     <Fragment>
+      <Grid container lg={ 6 } alignContent="center" justifyContent={ 'center' }>
 
-      <ul className={ classes.list }>
-        {display.map((quote) => (
-          <QuoteItem
-            key={ quote.key }
-            id={ quote.key }
-            author={ quote.author }
-            text={ quote.quote }
-            date={ quote.date }
-          />
-        ))}
-      </ul>
+        <List dense={ true }>
+          {display.map((quote) => (
+            <QuoteItem
+                key={ quote.key }
+                id={ quote.key }
+                author={ quote.author }
+                text={ quote.quote }
+                date={ quote.date }
+              />
+            ))}
 
+        </List>
+        
+      </Grid>
     </Fragment>
   );
 };
