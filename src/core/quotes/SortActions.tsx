@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { FCC } from "@shared/models/fc-children.model";
+import { SortActionProp } from "@shared/models/sort-actions.model";
 import React, { useEffect, useState } from "react";
 
-
-
-
-const SortActions = (props) => {
+const SortActions: FCC<SortActionProp> = (props) => {
 
   const sortActionChangeHandler = (event) => {
     const i = props.actions.findIndex((res) => {

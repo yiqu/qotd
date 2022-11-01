@@ -2,23 +2,18 @@
 import React, { useEffect, useReducer, useState, useContext, useMemo } from 'react';
 import classes from './TopNav.module.scss';
 import { NavLink, Link } from 'react-router-dom';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import useQuery from '../query-param-hook/QueryParam';
 
 const TopNav = () => {
 
-  const location = useLocation();
   const { allParams } = useQuery();
   const sortParamData = allParams.find((param) => {
     return param.key === 'sort';
   });
 
-  const isLinkActive = (match, location) => {
-    const supposedPath = match?.url;
-    if (location.pathname === supposedPath) {
-      return true;
-    }
-    return false;
+  const isLinkActive2 = (navData,x,a) => {
+    return navData.isActive ? classes.active : '';
   };
 
   const defaultQuotesTo = {
@@ -45,12 +40,12 @@ const TopNav = () => {
       <nav className={ classes.nav }>
         <ul>
           <li>
-            <NavLink to={ quotesTo } activeClassName={ classes.active } isActive={ isLinkActive }>
+            <NavLink to={ quotesTo } className={ isLinkActive2 } end={ true }>
               All Quotes
             </NavLink>
           </li>
           <li>
-            <NavLink to={ newQuoteTo } activeClassName={ classes.active } isActive={ isLinkActive }>
+            <NavLink to={ newQuoteTo } className={ isLinkActive2 } end={ true }>
               Add a Quote
             </NavLink>
           </li>
