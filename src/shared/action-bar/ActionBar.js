@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+import { Stack } from "@mui/material";
+import { Button } from '@mui/material';
 import React, { useEffect, useReducer, useState, useContext, useMemo } from 'react';
 
 export const ActionBar = (props) => {
@@ -6,20 +8,17 @@ export const ActionBar = (props) => {
 
   return (
     <React.Fragment>
-      <div className='d-flex justify-content-start mt-3'>
-
+      <Stack direction={ 'row' } spacing={ 2 } justifyContent="center" >
         {
           props.actions.map((action) => {
             return (
-              <div key={ action.id } className="mr-2">
-                <button className='btn btn-primary' onClick={ props.actionClick(action) }> { action.display } </button>
+              <div key={ action.id }>
+                <Button variant="outlined" disableElevation onClick={ props.actionClick(action) }> { action.display } </Button>
               </div>
             );
           })
         }
-
-        
-      </div>
+      </Stack>
 
     </React.Fragment>
   );

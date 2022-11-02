@@ -13,9 +13,9 @@ const QuoteList = (props) => {
 
   return (
     <Fragment>
-      <Grid container lg={ 6 } alignContent="center" justifyContent={ 'center' }>
+      <Grid container lg={ 4 } alignContent="center" justifyContent={ 'center' } wrap="nowrap">
 
-        <List dense={ true }>
+        <List dense={ true } sx={ {width: '100%'} }>
           {display.map((quote) => (
             <QuoteItem
                 key={ quote.key }

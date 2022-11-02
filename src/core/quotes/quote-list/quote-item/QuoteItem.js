@@ -13,7 +13,7 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import { FormatQuote, ArticleOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
-
+import Divider from '@mui/material/Divider';
 
 
 const QuoteItem = (props) => {
@@ -29,15 +29,10 @@ const QuoteItem = (props) => {
   return (
     <ListItem className={ classes.item } sx={ {mb:2} } secondaryAction={
       <div>
-        <IconButton edge="end" aria-label="delete">
-          <ArticleOutlined />
-        </IconButton>
-        <IconButton edge="end" aria-label="delete">
+        <IconButton edge="end" LinkComponent={ Link } to={ quoteDetailLink }>
           <ArticleOutlined />
         </IconButton>
       </div>
-      
-      
     }>
       
       <ListItemAvatar>
@@ -46,20 +41,11 @@ const QuoteItem = (props) => {
         </Avatar>
       </ListItemAvatar>
 
-      <ListItemText primary={ props.text } secondary={ 
-        `${props.author} (${new Date(props.date).toString()})` } secondaryTypographyProps={ {style: {whiteSpace: 'normal'}} }>
+      <ListItemText primary={ props.text } 
+        secondary={ 
+          <span>{props.author} | {new Date(props.date).toString()}</span> 
+        }>
       </ListItemText>
-
-      {/* <figure>
-        <blockquote>
-          <p>{props.text}</p>
-        </blockquote>
-        <figcaption>{props.author} ({new Date(props.date).toString()}) </figcaption>
-      </figure>
-
-      <Link className='btn' to={ quoteDetailLink }>
-        View Details
-      </Link> */}
 
     </ListItem>
   );

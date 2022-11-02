@@ -17,6 +17,9 @@ import { axiosFetcher } from '../../../shared/swr/fetcher';
 import { getQuoteAndComments, getQuoteComments, getQuoteDetail } from '../../../shared/api/quote-detail';
 import useShowComments from '../../../shared/hooks/useShowComments';
 import LoadingLogo from '../../../shared/loading/full-logo/LoadingLogo';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Skeleton from '@mui/material/Skeleton';
+import { Stack } from "@mui/material";
 
 const initialValue = {
   comment: ''
@@ -107,31 +110,34 @@ const QuoteDetail = () => {
 
   return (
     <React.Fragment>
-      
-      <div className='d-flex justify-content-start mt-3'>
+      <Grid container spacing={ 0 } direction="column" lg={ 12 } xs={ 12 } sx={ {my: 3} } justifyContent="start" alignItems="center">
+
         <ActionBar actions={ actions } actionClick={ actionClickHandler }></ActionBar>
-      </div>
 
-      <div className="d-flex justify-content-center align-items-center flex-column">
+        <div className={ "d-flex justify-content-center align-items-center flex-column " }>
 
-        <div className='w-100'>
-          <figure className={ classes.quote }>
-            <blockquote>
-              <p className="poppins">"{quoteDetail.quote}"</p>
-            </blockquote>
-            <figcaption> - {quoteDetail.author}</figcaption>
-            <figcaption className='fs-16'>{new Date(quoteDetail.date).toString()}</figcaption>
-          </figure>
-        </div>
+          <div className='w-100'>
+            <figure className={ classes.quote }>
+              <blockquote>
+                <p className="poppins">"{quoteDetail.quote}"</p>
+              </blockquote>
+              <figcaption> - {quoteDetail.author}</figcaption>
+              <figcaption className='fs-16'>{new Date(quoteDetail.date).toString()}</figcaption>
+            </figure>
+          </div>
 
-        <React.Fragment>
-          <div className='w-100 d-flex justify-content-center align-items-center flex-column'>
+          <React.Fragment>
+            <div className='w-100 d-flex justify-content-center align-items-center flex-column'>
 
-            <Suspense fallback={ <LoadingLogo message={ 'comments' }></LoadingLogo> }>
-              <Await 
+              <Suspense fallback={ <Stack spacing={ 3 } sx={ {width: '100%'} }>
+                <Skeleton variant="rectangular"  height={ 20 } />
+                <Skeleton variant="rectangular"  height={ 20 } />
+                <Skeleton variant="rectangular" height={ 20 } />
+              </Stack> }>
+                <Await 
                 resolve={ comments }
                 errorElement={ <p>Error loading quote comments.</p> }>
-                {
+                  {
                     (comments) => {
                       return (
                         <>
@@ -153,35 +159,37 @@ const QuoteDetail = () => {
                       );
                     }
                 }
-              </Await>
-            </Suspense>
+                </Await>
+              </Suspense>
             
-            <div className='w-100 d-flex flex-row justify-content-center align-items-center'>
+              <div className='w-100 d-flex flex-row justify-content-center align-items-center'>
 
-              { showCommentForm ? (
-                <div className={ `${classes['form-parent']}` }>
-                  <Formik
+                { showCommentForm ? (
+                  <div className={ `${classes['form-parent']}` }>
+                    <Formik
                   initialValues={ initialValue }
                   validationSchema= { validationSchema }
                   onSubmit= { onSubmitHandler }>
-                    {
+                      {
                     (formik) => {
                       return <CommentForm formik={ formik } apiLoading={ addCommentLoading } cancel={ onCancelCommentHandler }></CommentForm>;
                     }
                   }
-                  </Formik>
-                </div>) : (
-                  <div>
-                    <button className='btn btn-primary mt-3' onClick={ addCommentHandler }>Comment</button>
-                  </div>
+                    </Formik>
+                  </div>) : (
+                    <div>
+                      <button className='btn btn-primary mt-3' onClick={ addCommentHandler }>Comment</button>
+                    </div>
                 )
               }
 
-            </div>
+              </div>
 
-          </div>
-        </React.Fragment>
-      </div>
+            </div>
+          </React.Fragment>
+        </div>
+      </Grid>
+      
     </React.Fragment>
     
   );

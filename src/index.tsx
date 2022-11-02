@@ -23,6 +23,26 @@ const mainTheme: Theme = createTheme({
       defaultProps: {
         disableRipple: false
       }
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          fontSize: '15px',
+          paddingBottom: '5px'
+        }
+      },
+      defaultProps: {
+        primaryTypographyProps: {
+          style: {
+            whiteSpace: 'nowrap', overflow:'hidden', textOverflow:'ellipsis'
+          }
+        },
+        secondaryTypographyProps: {
+          style: {
+            whiteSpace: 'nowrap', overflow:'hidden', textOverflow:'ellipsis'
+          }
+        }
+      }
     }
   }
 });
